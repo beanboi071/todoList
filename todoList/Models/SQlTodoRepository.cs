@@ -1,4 +1,5 @@
-﻿using todoList.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using todoList.DB;
 
 namespace todoList.Models
 {
@@ -16,9 +17,12 @@ namespace todoList.Models
             return task;
         }
 
-        public Todo DeleteTask(Todo task)
+        public Todo DeleteTask(int id)
         {
-            
+            var task = context.ToDoList.Find(id);
+            context.ToDoList.Remove(task);
+            context.SaveChanges();
+            return task;
         }
 
         public IEnumerable<Todo> GetAll()
@@ -32,13 +36,11 @@ namespace todoList.Models
             return task;
         }
 
-        public Todo UpdateTask(int id, Todo newTask)
+        public Todo UpdateTask(Todo newTask)
         {
-            var oldTask = context.ToDoList.Find(id);
-            oldTask.Task = newTask.Task;
-            oldTask.IsCompleted = newTask.IsCompleted;
+            context.Entry(newTask).State = EntityState.Modified;
             context.SaveChanges();
-            return oldTask;
+            return newTask;
         }
     }
 }

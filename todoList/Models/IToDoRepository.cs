@@ -5,7 +5,7 @@
         IEnumerable<Todo> GetAll();
         Todo Gettask(int id);
         Todo AddTask(Todo task);
-        Todo UpdateTask(int id, Todo newTask);
+        Todo UpdateTask(Todo newTask);
         Todo DeleteTask(int id);
     }
 }

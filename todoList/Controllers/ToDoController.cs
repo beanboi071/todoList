@@ -51,22 +51,19 @@ namespace todoList.Controllers
             return CreatedAtRoute("GetTask", new {id = task.Id},task);
         }
 
-        [HttpPut("Update{id:int}", Name = "Update")]
+        [HttpPut("Update", Name = "Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Update(int id,[FromBody] Todo task)
+        public IActionResult Update([FromBody] Todo task)
         {
-            if(id == null || id != task.Id)
-            {
-                return BadRequest();
-            }
-            var checkTask = GetTask(id);
-            if(checkTask == null)
-            {
-                return NotFound(id);
-            }
-            var updatedTask = todoRepository.UpdateTask(id, task);
+            //var checkTask = GetTask(task.Id);
+            //if (checkTask == null)
+            //{
+            //    return NotFound(task);
+            //}
+            //checkTask = null;
+            var updatedTask = todoRepository.UpdateTask( task);
             return Ok(updatedTask);
 
         }
@@ -84,6 +81,7 @@ namespace todoList.Controllers
                 return NotFound();
             }
             todoRepository.DeleteTask(id);
+            return Ok(task);
         }
     }
 }
